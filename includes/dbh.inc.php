@@ -1,5 +1,5 @@
 <?php
-
+  //Establish connection to MySql
   $host = "localhost";
   $user = "root";
   $password = "";

@@ -1,25 +1,38 @@
-.borderImage { 
-  
+.borderImage {
+
   border: 10px solid transparent;
   padding: 15px;
-  border-image-source: url(images/foodimage.jpg);  
+  border-image-source: url(images/foodimage.jpg);
   border-image-slice: 30;
 
 }
+ .login-box-wrapper {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -60%);
+   height: 315px;
+ }
+ .login-box-wrapper h1 {
+   margin-top: 0;
+   margin-bottom: 0;
+   transform: translateY(-30px);
+ }
  .login-box {
   width: 300px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #b6ff8f;
+  display: inline;
  }
- .login-box h1{
+ .login-box h2{
   float: left;
-  font-size: 40px;
-  border-bottom: 6px solid #ff8f85;
-  margin-bottom: 50px;
-  padding: 13px 0;
+  font-size: 30px;
+  border-bottom: 4px solid #ff8f85;
+  margin-bottom: 10px;
+  padding-top: 13px;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+ }
+ .login-box h2, i{
+   color: #25cd8a;
  }
  .textbox{
   width: 100%;
@@ -38,20 +51,32 @@
   border: none;
   outline: none;
   background: none;
-  color: #b6ff8f;
   font-size: 18px;
-  width: 80px;
   float: left;
-  margin 0 10px;
  }
  .btn{
   width: 100%;
-  background: none;
-  border: 2px solid #ff8f85;
-  color: #b6ff8f;
+  height: 40px;
+  border-radius: 15px;
+  background: #ff8f85;
+  border: none;
+  color: #ffffff;
   padding 5px;
   font-size: 18px;
   cursor: pointer;
   margin: 12px 0;
+  box-shadow: none;
+  outline: none;
+  transition: background-color ease-in-out 0.1s;
+}
+.btn:hover{
+  background-color: #f3645c;
 }
 
+.btn:active{
+  background-color: #eb413d;
+}
+
+.error {
+  color: red;
+}

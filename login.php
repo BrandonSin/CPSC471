@@ -39,17 +39,18 @@
   <form action="includes/login.inc.php" method="post">
     <div class="textbox">
       <i class="fas fa-child"></i>
-      <input type="text" placeholder="Username" onfocus="this.placeholder = ''" onBlur="this.placeholder = 'Username'" name="username" value="">
+      <input type="text" placeholder="Username" onfocus="this.placeholder = ''" onBlur="this.placeholder = 'Username'" name="input-username" value="">
     </div>
     <div class ="textbox">
       <i class="fas fa-unlock"></i>
-      <input type ="password" placeholder="Password" onfocus="this.placeholder = ''" onBlur="this.placeholder = 'Password'" name="password" value="">
+      <input type ="password" placeholder="Password" onfocus="this.placeholder = ''" onBlur="this.placeholder = 'Password'" name="input-password" value="">
     </div>
     <input class="btn" type="submit" name="login-submit" value="Sign in">
   </form>
 
  <p class="error">
    <?php
+    //Take the query parameters in the path, if has error, show the error message.
      if(isset($_GET["error"])) {
        if($_GET["error"] == "nouser") {
          echo 'The username you entered does not exist.';

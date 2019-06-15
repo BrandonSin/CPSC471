@@ -1,6 +1,9 @@
 <?php
+  //initiate session with userId and userType
   session_start($options = ["userId", "userType"]);
   include_once "./includes/dbh.inc.php";
+
+  //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");
     exit();

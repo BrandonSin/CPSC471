@@ -3,6 +3,10 @@
   session_start($options = ["userId", "userType"]);
   include_once "./includes/dbh.inc.php";
 
+  if($_SESSION["userId"] == "store_manager") {
+    header("Location: ./storemanage.php");
+  }
+
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");

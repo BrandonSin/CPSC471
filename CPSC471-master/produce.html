@@ -14,7 +14,10 @@
 
 <html>
 <head>
-<style>
+<script src ="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+<link rel= "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css">
+<script src ="https://maxcdnbootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+<style> 
 
 #borderImage {
 
@@ -23,7 +26,7 @@
   border-image-source: url(images/foodBorder.jpg);
   border-image-slice: 20;
   }
-    <!-- banner font----------------------->
+   
   h1.verdana {
     font face = "verdana";
     font size = 90px;
@@ -57,27 +60,27 @@
  li a:hover:not(.active) {
  background-color: #226b00;
  }
+
  .active {
-  background-color: #226b00;
+  background-color: #226b00;;
 }
 
 /*Logout Button */
-
- li2 {
+li2 {
   float: right;
-  }
+}
 
- li2 a {
+
+li2 a {
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  }
-
- li2 a:hover:not(.active) {
- background-color: #226b00;
- }
+}
+li2 a:hover:not(.active) {
+  background-color: #226b00;
+}
 
  </style>
  </head>
@@ -90,11 +93,34 @@
 <ul>
   <li><a href="index.php">Home</a></li>
   <li><a href="Discount">Discount</a></li>
-  <li><a href="produce.php">Catalog</a></li>
-  <li><a class="active" href="shoppingCart.php">Shopping Cart</a></li>
+  <li><a class="active" href="produce.php">Catalog</a></li>
+  <li><a href="shoppingCart.php">Shopping Cart</a></li>
   <li><a href="shoppingList.php">Shopping List</a></li>
   <li2><a href="logout.php">Logout</a></li2>
+ </ul>
 
-</ul>
+
+
 </body>
 </html>
+
+
+
+
+
+<!--  
+if($result->num_rows > 0){
+  echo "<table><tr><th>Food</th><th>Price</th></tr>";
+
+  //output data of each row
+  while($row = $result->fetch_assoc()) {
+     echo "<tr><td>" . $row["name"]. "</td><td>" . $row["price"]. "</td></tr>";
+      
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+
+$conn->close(); 
+-->

@@ -90,12 +90,9 @@ li2 a:hover:not(.active) {
 <ul>
   <li><a class="active" href="index.php">Home</a></li>
   <li><a href="Discount">Discount</a></li>
-  <li><a href="produce.php">Produce</a></li>
-  <li><a href="Dairy">Dairy</a></li>
-  <li><a href="MnS">Meat & Seafood</a></li>
-  <li><a href="Snacks">Snacks</a></li>
+  <li><a href="produce.php">Catalog</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
-  <li><a href="shoppingList.html">Shopping List</a></li>
+  <li><a href="shoppingList.php">Shopping List</a></li>
    <li2><a href="logout.php">Logout</a></li2>
 
 </ul>

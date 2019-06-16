@@ -195,92 +195,67 @@
      ?>
    </h2>
    <div class="row">
-     <h3 class="col-2">Items</h3>
-     <button class="col-2 new-item-btn" onclick="showNewItemModal()" id="modalBtn">New item</button>
+     <h3 class="col-4">Edit Item</h3>
    </div>
-   <div class="mt-4 row item-list-wrapper">
+   <div>
      <?php
-      $allItemsQuery = "SELECT * FROM item WHERE store_id = (SELECT store_id FROM store_manager WHERE user_id='" . $userId . "');";
-      $resultItems = mysqli_query($conn, $allItemsQuery);
+      $itemId = $_GET["itemId"];
+      $itemQuery = "SELECT * FROM item WHERE item_id=\"$itemId\"";
+      $resultItems = mysqli_query($conn, $itemQuery);
       if(mysqli_num_rows($resultItems) > 0) {
-        while($row = mysqli_fetch_array($resultItems)){
-          $itemId = $row["item_id"];
-          $itemName = $row["name"];
-          $itemImg = $row["image"];
-          echo(
-            "<div class=\"col-4 item-img\" >".
-              "<div class=\"item-wrapper\">".
-                "<img src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"100px\" width=\"100px\"/>".
-                "$itemName".
-                "<div class=\"row\">".
-                  "<button class=\"new-item-btn mt-2 mr-1\" onclick=\"showDeleteModal()\" value=\"".$itemId."\">Delete</button>".
-                  "<button class=\"new-item-btn mt-2 ml-1\" onclick=\"editItem(this)\" value=\"".$itemId."\">Edit</button>".
+        $row = mysqli_fetch_array($resultItems);
+
+        $itemId = $row["item_id"];
+        $itemName = $row["name"];
+        $itemDesc = $row["description"];
+        $itemStock = $row["stock"];
+        $itemPrice = $row["price"];
+        $itemOnsale = $row["is_on_sale"];
+        $itemPercentOff = $row["percent_off"];
+        $itemImg = $row["image"];
+        echo(
+          "<div class=\"col-4 item-img\">".
+              "<img class=\"mb-2\" src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"200px\" width=\"200px\"/>".
+              "<form action=\"\" method=\"pos\">".
+                "<div class=\"d-flex flex-column mb-2\">".
+                  "Name".
+                  "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
                 "</div>".
-              "</div>".
-            "</div>"
-          );
-        }
+                "<div class=\"d-flex flex-column mb-2\">".
+                  "Description".
+                  "<textarea class=\"desc-input\" name=\"edit-description\" value=\"\" rows=\"4\" cols=\"50\">$itemDesc</textarea>".
+                "</div>".
+                "<div class=\"d-flex flex-column mb-2\">".
+                  "Stock".
+                  "<input class=\"number-input\" type=\"number\" name=\"edit-stock\" value=\"$itemStock\">".
+                "</div>".
+                "<div class=\"d-flex flex-column mb-2\">".
+                  "Price".
+                  "<input class=\"decimal-input\" type=\"number\" step=\"0.01\" min=\"0\" name=\"edit-price\" value=\"$itemPrice\">".
+                "</div>".
+                "<div class=\"row ml-0 mb-2 mr-1\">".
+                  "On Sale".
+                  "<input class=\"ml-1 check-box\" type=\"checkbox\" name=\"edit-on-sale\" value=\"\"".
+                  ($itemOnsale == 1 ? "checked" : "").
+                  ">".
+                "</div>".
+                "<div class=\"d-flex flex-column mb-2\">".
+                  "Percent Off".
+                  "<input class=\"number-input\" type=\"number\" name=\"edit-percent-off\" max=\"100\" min=\"1\" value=\"".
+                  (isset($itemPercentOff) ? $itemPercentOff : "").
+                  "\">".
+                "</div>".
+                "<input class=\"new-item-btn mt-1 mb-5\" type=\"submit\" name=\"login-submit\" value=\"Save\">".
+              "</form>".
+          "</div>"
+        );
       }
      ?>
    </div>
   </div>
 
-  <div id="newItemModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close new-item-close" onclick="hideNewItemModal()">&times;</span>
-      <p>Some text in the Modal..</p>
-    </div>
-
-  </div>
-
-  <div id="deleteModal" class="modal">
-
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close delete-close" onclick="hideDeleteModal()">&times;</span>
-      <p>Some text in the Modal..</p>
-    </div>
-
-  </div>
-
   <script>
 
-    var newItemModal = document.getElementById("newItemModal");
-    var deleteModal = document.getElementById("deleteModal");
-
-    // When the user clicks the button, open the modal
-    function showNewItemModal() {
-      newItemModal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    function hideNewItemModal() {
-      newItemModal.style.display = "none";
-    }
-
-    // When the user clicks the button, open the modal
-    function showDeleteModal() {
-      deleteModal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    function hideDeleteModal() {
-      deleteModal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if ((event.target == newItemModal) || (event.target == deleteModal)) {
-        deleteModal.style.display = "none";
-        newItemModal.style.display = "none";
-      }
-    }
-
-    function editItem(elem) {
-      window.location.href = "edititem.php?itemId="+elem.value;
-    }
   </script>
 </body>
 </html>

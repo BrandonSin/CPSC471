@@ -210,7 +210,7 @@
         echo(
           "<div class=\"col-4 item-img\">".
               "<img class=\"mb-2\" src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"200px\" width=\"200px\"/>".
-              "<form action=\"\" method=\"pos\">".
+              "<form action=\"\" method=\"post\">".
                 "<div class=\"d-flex flex-column mb-2\">".
                   "<h6>Name</h6>".
                   "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
@@ -227,7 +227,6 @@
                   "<h6>Price</h6>".
                   "<input class=\"decimal-input\" type=\"number\" step=\"0.01\" min=\"0\" name=\"edit-price\" value=\"$itemPrice\">".
                 "</div>".
-
                 "<div class=\"d-flex flex-column mb-2\">".
                   "<h6>Percent Off</h6>".
                   "<div class=\"row ml-0 mb-2 mr-1\">".
@@ -240,7 +239,10 @@
                     ">".
                   "</div>".
                 "</div>".
-                "<input class=\"new-item-btn mt-1 mb-5\" type=\"submit\" name=\"login-submit\" value=\"Save\">".
+                "<div class=\"row ml-0 mt-1 mb-5\">".
+                  "<input class=\"new-item-btn\" type=\"submit\" name=\"login-submit\" value=\"Save\">".
+                  "<button type=\"button\" class=\"new-item-btn ml-2\" onclick=\"cancelEdit()\">Cancel</button>".
+                "</div>".
               "</form>".
           "</div>"
         );
@@ -248,9 +250,10 @@
      ?>
    </div>
   </div>
-
   <script>
-
+    function cancelEdit(){
+      window.location.href="storemanage.php";
+    }
   </script>
 </body>
 </html>

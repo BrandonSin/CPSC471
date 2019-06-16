@@ -65,6 +65,11 @@
     font size = 50px;
   }
 
+  h6 {
+    color: #ff8f85;
+    font-weight: bold;
+  }
+
   .store-name{
     border-bottom: 4px solid #ff8f85;
     width: fit-content;
@@ -90,17 +95,6 @@
 
   .store-manage-container{
     margin-left: 3% !important;
-  }
-
-  .item-list-wrapper{
-    width: 750px;
-    transform: translateX(-60px);
-  }
-
-  .item-wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .item-img{
@@ -218,32 +212,33 @@
               "<img class=\"mb-2\" src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"200px\" width=\"200px\"/>".
               "<form action=\"\" method=\"pos\">".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "Name".
+                  "<h6>Name</h6>".
                   "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "Description".
+                  "<h6>Description</h6>".
                   "<textarea class=\"desc-input\" name=\"edit-description\" value=\"\" rows=\"4\" cols=\"50\">$itemDesc</textarea>".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "Stock".
+                  "<h6>Stock</h6>".
                   "<input class=\"number-input\" type=\"number\" name=\"edit-stock\" value=\"$itemStock\">".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "Price".
+                  "<h6>Price</h6>".
                   "<input class=\"decimal-input\" type=\"number\" step=\"0.01\" min=\"0\" name=\"edit-price\" value=\"$itemPrice\">".
                 "</div>".
-                "<div class=\"row ml-0 mb-2 mr-1\">".
-                  "On Sale".
-                  "<input class=\"ml-1 check-box\" type=\"checkbox\" name=\"edit-on-sale\" value=\"\"".
-                  ($itemOnsale == 1 ? "checked" : "").
-                  ">".
-                "</div>".
+
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "Percent Off".
-                  "<input class=\"number-input\" type=\"number\" name=\"edit-percent-off\" max=\"100\" min=\"1\" value=\"".
-                  (isset($itemPercentOff) ? $itemPercentOff : "").
-                  "\">".
+                  "<h6>Percent Off</h6>".
+                  "<div class=\"row ml-0 mb-2 mr-1\">".
+                    "<input class=\"number-input mr-3\" type=\"number\" name=\"edit-percent-off\" max=\"100\" min=\"1\" value=\"".
+                    (isset($itemPercentOff) ? $itemPercentOff : "").
+                    "\">".
+                    "On Sale".
+                    "<input class=\"ml-1 check-box\" type=\"checkbox\" name=\"edit-on-sale\" value=\"\"".
+                    ($itemOnsale == 1 ? "checked" : "").
+                    ">".
+                  "</div>".
                 "</div>".
                 "<input class=\"new-item-btn mt-1 mb-5\" type=\"submit\" name=\"login-submit\" value=\"Save\">".
               "</form>".

@@ -36,8 +36,15 @@
             session_start();
             $_SESSION["userId"] = $row["user_id"];
             $_SESSION["userType"] = $row["member_type"];
-            header("Location: ../index.php?login=success");
-            exit();
+
+            if($_SESSION["userType"] == "shopper") {
+              header("Location: ../index.php?login=success");
+              exit();
+            }
+            else if($_SESSION["userType"] == "store_manager") {
+              header("Location: ../storemanage.php?login=success");
+              exit();
+            }
           }
           //if not redirect back with error msg
           else {

@@ -18,6 +18,7 @@
 <head>
   <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
 <style>
 
   .slideShows {display: none;}
@@ -79,6 +80,7 @@
     color: white;
     transition: background-color ease-in-out 0.1s;
     height: 35px;
+    padding: 0 10px 0 10px;
   }
   .new-item-btn:hover{
     background-color: #f3645c;
@@ -97,6 +99,7 @@
     color: white;
     transition: background-color ease-in-out 0.1s;
     height: 35px;
+    padding: 0 10px 0 10px;
   }
   .delete-btn:hover{
     background-color: #ff1a1a;
@@ -115,6 +118,7 @@
     color: white;
     transition: background-color ease-in-out 0.1s;
     height: 35px;
+    padding: 0 10px 0 10px;
   }
   .cancel-btn:hover{
     background-color: #cccccc;
@@ -144,6 +148,15 @@
     padding: 10px;
   }
 
+  .item-name {
+    width: 150px;
+    max-height: 25px;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+
   .name-input {
     width: 250px;
   }
@@ -164,6 +177,9 @@
     transform: translateY(6px);
   }
 
+  .success {
+    color: #08d208;
+  }
   /*================================================================================================*/
   /* THIS CODE IS USED FROM https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
     /* The Modal (background) */
@@ -185,7 +201,7 @@
   .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 35px;
     border: 1px solid #888;
     width: 80%;
   }
@@ -214,7 +230,7 @@
 <h1 id="borderImage"><font face = "verdana">CC's Grocery Online Store</h1>
 
  <br><br>
- <div class="container store-manage-container">
+ <div class="container store-manage-container mb-4">
    <h2 class="mb-4 store-name">
      <?php
       //Create the query and turn it to a prepared statement
@@ -231,10 +247,34 @@
      ?>
    </h2>
    <div class="row">
-     <h3 class="col-2">Items</h3>
-     <button class="ml-2 col-4 new-item-btn" onclick="showNewItemModal()" id="modalBtn">New item</button>
+     <h3 class="ml-3">Items</h3>
+     <button class="ml-4 new-item-btn" onclick="showNewItemModal()" id="modalBtn">New item</button>
    </div>
-   <div class="mt-4 row item-list-wrapper">
+   <div class="error">
+     <?php
+        if(isset($_GET["error"])) {
+          if($_GET["error"] == "emptyfields") {
+            echo "Please fill in required fields.";
+          }
+          if($_GET["error"] == "sqlerror") {
+            echo "Failed connecting to DB.";
+          }
+          if($_GET["error"] == "failcreatequery") {
+            echo "There was a problem creating the query.";
+          }
+        }
+      ?>
+   </div>
+   <div class="success">
+     <?php
+         if(isset($_GET["edit"])) {
+           if($_GET["edit"] == "success") {
+             echo "Item succesfully edited.";
+           }
+         }
+     ?>
+   </div>
+   <div class="mt-3 row item-list-wrapper">
      <?php
       $allItemsQuery = "SELECT * FROM item WHERE store_id = (SELECT store_id FROM store_manager WHERE user_id='" . $userId . "');";
       $resultItems = mysqli_query($conn, $allItemsQuery);
@@ -247,7 +287,7 @@
             "<div class=\"col-4 item-img\" >".
               "<div class=\"item-wrapper\">".
                 "<img src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"100px\" width=\"100px\"/>".
-                "$itemName".
+                "<div class=\"item-name\">$itemName</div>".
                 "<div class=\"row\">".
                   "<button class=\"new-item-btn mt-2 mr-1\" onclick=\"showDeleteModal(this)\" value=\"".$itemId."\">Delete</button>".
                   "<button class=\"new-item-btn mt-2 ml-1\" onclick=\"editItem(this)\" value=\"".$itemId."\">Edit</button>".
@@ -266,7 +306,45 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close new-item-close" onclick="hideNewItemModal()">&times;</span>
-      <p>Some text in the Modal..</p>
+      <div class="row">
+        <h3 class="col-4">New Item</h3>
+      </div>
+      <form method="POST" action="includes/createitem.php" enctype="multipart/form-data">
+        <div class="row mb-2 ml-0">
+          <div class="d-flex flex-column">
+            <h6>Name*</h6>
+            <input class="name-input" type="text" name="name" value="">
+          </div>
+          <div class="d-flex flex-column ml-3">
+            <h6>Image</h6>
+            <input class="" type="file" name="upload-img" value="">
+          </div>
+        </div>
+        <div class="d-flex flex-column mb-2">
+          <h6>Description</h6>
+          <textarea class="desc-input" name="description" value="" rows="4" cols="50"></textarea>
+        </div>
+        <div class="d-flex flex-column mb-2">
+          <h6>Stock*</h6>
+          <input class="number-input" type="number" name="stock" value="$itemStock">
+        </div>
+        <div class="d-flex flex-column mb-2">
+          <h6>Price*</h6>
+          <input class="decimal-input" type="number" step="0.01" min="0" name="price" value="$itemPrice">
+        </div>
+        <div class="d-flex flex-column mb-2">
+          <h6>Percent Off</h6>
+          <div class="row ml-0 mb-2 mr-1">
+            <input class="number-input mr-3 disabled" type="number" name="percent-off" max="100" id="percentOff" min="0">
+              On Sale
+            <input class="ml-1 check-box" type="checkbox" name="on-sale" id="checkBox" onclick="toggleOnsale()">
+          </div>
+        </div>
+        <div class="row ml-0 mt-1 mb-5">
+          <input class="new-item-btn" type="submit" name="create-submit" value="Create">
+          <button type="button" class="cancel-btn ml-2" onclick="hideNewItemModal()">Cancel</button>
+        </div>
+      </form>
     </div>
 
   </div>
@@ -281,7 +359,7 @@
         <button class="cancel-btn mt-2 mr-1" onclick="hideDeleteModal()">Cancel</button>
         <form action="includes/deleteitemfromshop.inc.php" method="post">
           <input type="submit" class="delete-btn mt-2 ml-1" name="delete-btn" value="Delete">
-          <input type="text" class="d-none" name-"delete-item-id" id="deleteItemId">
+          <input type="text" class="d-none" name="delete-item-id" id="deleteItemId">
         </form>
       </div>
     </div>

@@ -126,6 +126,14 @@
     opacity: 0.5;
     pointer-events: none;
   }
+
+  .fit-content {
+    width: fit-content;
+  }
+
+  .max-content {
+    width: max-content;
+  }
   /*================================================================================================*/
   /* THIS CODE IS USED FROM https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
     /* The Modal (background) */
@@ -214,22 +222,28 @@
         echo(
           "<div class=\"col-4 item-img\">".
               "<img class=\"mb-2\" src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"200px\" width=\"200px\"/>".
-              "<form action=\"includes/edititem.inc.php\" method=\"post\">".
-                "<div class=\"d-flex flex-column mb-2\">".
-                  "<h6>Name</h6>".
-                  "<input class=\"d-none\" tpye=\"text\" name=\"item-id\" value=\"$itemId\">".
-                  "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
+              "<form action=\"includes/edititem.inc.php\" method=\"post\" enctype=\"multipart/form-data\">".
+                "<div class=\"row max-content mb-2 ml-0\">".
+                  "<div class=\"d-flex flex-column\">".
+                    "<h6>Name*</h6>".
+                    "<input class=\"d-none\" tpye=\"text\" name=\"item-id\" value=\"$itemId\">".
+                    "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
+                  "</div>".
+                  "<div class=\"d-flex flex-column ml-3\">".
+                    "<h6>Edit Image</h6>".
+                    "<input class=\"fit-content\" type=\"file\" name=\"edit-img\" value=\"\">".
+                  "</div>".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
                   "<h6>Description</h6>".
                   "<textarea class=\"desc-input\" name=\"edit-description\" value=\"\" rows=\"4\" cols=\"50\">$itemDesc</textarea>".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "<h6>Stock</h6>".
+                  "<h6>Stock*</h6>".
                   "<input class=\"number-input\" type=\"number\" name=\"edit-stock\" value=\"$itemStock\">".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
-                  "<h6>Price</h6>".
+                  "<h6>Price*</h6>".
                   "<input class=\"decimal-input\" type=\"number\" step=\"0.01\" min=\"0\" name=\"edit-price\" value=\"$itemPrice\">".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".

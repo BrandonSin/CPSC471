@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 17, 2019 at 03:28 PM
+-- Generation Time: Jun 17, 2019 at 03:43 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -138,7 +138,7 @@ CREATE TABLE `is_put_in` (
 --
 
 INSERT INTO `is_put_in` (`item_id`, `user_id`, `cart_id`, `quantity_of_item`) VALUES
-('cg-brown-eggs', 'shopper1', '19277561', 4),
+('cg-brown-eggs', 'shopper1', '19277561', 5),
 ('cg-brown-eggs', 'shopper1', '27528549', 2),
 ('cg-brown-eggs', 'shopper1', '44648310', 1),
 ('cg-curry-powder', 'shopper1', '44648310', 1),
@@ -152,7 +152,8 @@ INSERT INTO `is_put_in` (`item_id`, `user_id`, `cart_id`, `quantity_of_item`) VA
 ('pp-red-beets', 'shopper1', '', 1),
 ('pp-red-beets', 'shopper1', '44648310', 1),
 ('pp-yellow-onion', 'shopper1', '', 1),
-('pp-yellow-onion', 'shopper1', '27528549', 2);
+('pp-yellow-onion', 'shopper1', '27528549', 2),
+('pp-yellow-onion', 'shopper1', '87449474', 1);
 
 -- --------------------------------------------------------
 
@@ -236,6 +237,8 @@ CREATE TABLE `order_receipt` (
 --
 
 INSERT INTO `order_receipt` (`order_number`, `number_of_items`, `order_total`, `user_id`, `date_of_order`, `cart_id`) VALUES
+('53820223', 1, '1.62', 'shopper1', '0000-00-00', '87449474'),
+('56725673', 5, '15.95', 'shopper1', '0000-00-00', '19277561'),
 ('76156316', 3, '6.06', 'shopper1', '0000-00-00', '44648310'),
 ('92340503', 1, '29.16', 'shopper1', '2019-06-08', '18352934');
 
@@ -277,8 +280,10 @@ CREATE TABLE `shopping_cart` (
 
 INSERT INTO `shopping_cart` (`cart_id`, `total_price`, `discounted_price`, `user_id`, `company_id`, `active`) VALUES
 ('18352934', '29.16', NULL, 'shopper1', 'quik-parcel', 0),
-('19277561', '12.76', NULL, 'shopper1', 'quik-parcel', 1),
-('44648310', '6.06', NULL, 'shopper1', 'quik-parcel', 0);
+('18468673', '0.00', NULL, 'shopper1', 'quik-parcel', 1),
+('19277561', '15.95', NULL, 'shopper1', 'quik-parcel', 0),
+('44648310', '6.06', NULL, 'shopper1', 'quik-parcel', 0),
+('87449474', '1.62', NULL, 'shopper1', 'quik-parcel', 0);
 
 -- --------------------------------------------------------
 
@@ -386,7 +391,9 @@ ALTER TABLE `is_added_to`
 -- Indexes for table `is_applied_to`
 --
 ALTER TABLE `is_applied_to`
-  ADD PRIMARY KEY (`cart_id`,`user_id`,`coupon_code`);
+  ADD PRIMARY KEY (`cart_id`,`user_id`,`coupon_code`),
+  ADD KEY `is_applied_to_ibfk_2` (`coupon_code`),
+  ADD KEY `is_applied_to_ibfk_3` (`user_id`);
 
 --
 -- Indexes for table `is_put_in`
@@ -419,10 +426,7 @@ ALTER TABLE `shopper`
 -- Indexes for table `shopping_cart`
 --
 ALTER TABLE `shopping_cart`
-  ADD PRIMARY KEY (`cart_id`,`user_id`),
-  ADD UNIQUE KEY `cart_id` (`cart_id`,`user_id`),
-  ADD KEY `company_id` (`company_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`cart_id`,`user_id`);
 
 --
 -- Indexes for table `shopping_list`
@@ -467,51 +471,10 @@ ALTER TABLE `is_applied_to`
   ADD CONSTRAINT `is_applied_to_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Constraints for table `is_put_in`
---
-ALTER TABLE `is_put_in`
-  ADD CONSTRAINT `is_put_in_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `is_put_in_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `is_put_in_ibfk_3` FOREIGN KEY (`cart_id`) REFERENCES `shopping_cart` (`cart_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `item`
 --
 ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `grocery_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `order_receipt`
---
-ALTER TABLE `order_receipt`
-  ADD CONSTRAINT `order_receipt_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE CASCADE,
-  ADD CONSTRAINT `order_receipt_ibfk_2` FOREIGN KEY (`cart_id`) REFERENCES `shopping_cart` (`cart_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Constraints for table `shopper`
---
-ALTER TABLE `shopper`
-  ADD CONSTRAINT `shopper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `shopping_cart`
---
-ALTER TABLE `shopping_cart`
-  ADD CONSTRAINT `shopping_cart_ibfk_1` FOREIGN KEY (`company_id`) REFERENCES `delivery_company` (`company_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `shopping_cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `shopping_list`
---
-ALTER TABLE `shopping_list`
-  ADD CONSTRAINT `shopping_list_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `store_manager`
---
-ALTER TABLE `store_manager`
-  ADD CONSTRAINT `store_manager_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `store_manager_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `grocery_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

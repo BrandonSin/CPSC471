@@ -3,9 +3,12 @@
   session_start($options = ["userId", "userType"]);
   include_once "./includes/dbh.inc.php";
 
-  if($_SESSION["userId"] == "store_manager") {
-    header("Location: ./storemanage.php");
-  }
+    if(!isset($_SESSION["userType"])) {
+      $userType = $_SESSION["userType"];
+      if($userType == "store_manager") {
+        header("Location: ../storemanage.php");
+      }
+    }
 
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
@@ -90,14 +93,14 @@ li2 a:hover:not(.active) {
 </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
 <ul>
   <li><a class="active" href="index.php">Home</a></li>
 
   <li><a href="produce.php">Catalog</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
 
-   <li2><a href="logout.php">Logout</a></li2>
+   <li2><a href="includes/logout.inc.php">Logout</a></li2>
 
 </ul>
 
@@ -126,7 +129,7 @@ function slideShow() {
 }
 </script>
  <br><br><br>
-<p>GrocerEasy is a certified Online Grocery Shopping service that provides fresh food and fast shipping for various groceries in Canada.</p>
+<p>GrocerEase is a certified Online Grocery Shopping service that provides fresh food and fast shipping for various groceries in Canada.</p>
 
 </body>
 </html>

@@ -4,11 +4,20 @@
   session_start($options = ["userId", "userType", "cartId"]);
   include_once "./includes/dbh.inc.php";
 
+  if(!isset($_SESSION["userType"])) {
+    $userType = $_SESSION["userType"];
+    if($userType == "store_manager") {
+      header("Location: ../storemanage.php");
+    }
+  }
+
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");
     exit();
   }
+
+  //Get the user id and cart id of the current cart
   $userId = $_SESSION["userId"];
   $cartId = "";
   $cartQuery = "SELECT cart_id FROM shopping_cart WHERE active=1 AND user_id=\"$userId\"";
@@ -132,14 +141,14 @@ li2 a:hover:not(.active) {
 
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
 <ul>
   <li><a href="index.php">Home</a></li>
-  
+
   <li><a class="active" href="produce.php">Catalog</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
-  
-  <li2><a href="logout.php">Logout</a></li2>
+
+  <li2><a href="includes/logout.inc.php">Logout</a></li2>
  </ul>
  <br />
 <div class="container" style="width:700px;">
@@ -252,6 +261,7 @@ if(mysqli_num_rows($result)>0)
           </tr>
           <?php
             $total = 0;
+            //Get all the items in the user's cart and join it with the quantity of each item
             $sql = "SELECT S.item_id, S.name, S.price, S.is_on_sale, S.sale_price, I.quantity_of_item FROM item S INNER JOIN is_put_in I ON I.item_id=S.item_id AND I.user_id=\"$userId\" AND I.cart_id=$cartId";
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) > 0) {

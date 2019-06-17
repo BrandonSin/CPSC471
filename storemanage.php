@@ -3,6 +3,13 @@
   session_start($options = ["userId", "userType"]);
   include_once "./includes/dbh.inc.php";
 
+  if(!isset($_SESSION["userType"])) {
+    $userType = $_SESSION["userType"];
+    if($userType == "shopper") {
+      header("Location: ../index.php");
+    }
+  }
+
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");
@@ -227,9 +234,10 @@
 </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
 
  <br><br>
+ <a href="includes/logout.inc.php">Logout</a>
  <div class="container store-manage-container mb-4">
    <h2 class="mb-4 store-name">
      <?php

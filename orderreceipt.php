@@ -4,6 +4,13 @@
   session_start($options = ["userId", "userType", "cartId"]);
   include_once "./includes/dbh.inc.php";
 
+    if(!isset($_SESSION["userType"])) {
+      $userType = $_SESSION["userType"];
+      if($userType == "store_manager") {
+        header("Location: ../storemanage.php");
+      }
+    }
+
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");
@@ -122,13 +129,13 @@ li2 a:hover:not(.active) {
  </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
 <ul>
   <li><a href="index.php">Home</a></li>
-  
+
   <li><a class="active" href="produce.php">Catalog</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
-  
+
   <li2><a href="logout.php">Logout</a></li2>
  </ul>
  <br />

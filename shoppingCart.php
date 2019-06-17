@@ -86,7 +86,7 @@
 
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
 <ul>
   <li><a href="index.php">Home</a></li>
   

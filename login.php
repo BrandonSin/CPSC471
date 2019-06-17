@@ -33,7 +33,7 @@
 <body>
  <div class="bg"></div>
  <div class="login-box-wrapper">
-   <h1>GrocerEasy</h1>
+   <h1>GrocerEase</h1>
  <div class="login-box">
   <h2>Login</h2>
   <form action="includes/login.inc.php" method="post">
@@ -47,7 +47,7 @@
     </div>
     <input class="btn" type="submit" name="login-submit" value="Sign in">
   </form>
-
+  <a href="register.php">Register as a shopper</a>
  <p class="error">
    <?php
     //Take the query parameters in the path, if has error, show the error message.
@@ -61,8 +61,22 @@
        else if($_GET["error"] == "sqlerror") {
          echo 'There was a problem with the database.';
        }
-       if($_GET["error"] == "wrongpassword") {
+       else if($_GET["error"] == "wrongpassword") {
          echo 'Incorrect password.';
+       }
+     }
+     if(isset($_GET["register"])) {
+       if($_GET["register"] == "error") {
+         echo 'Username is already being used.';
+       }
+     }
+   ?>
+ </p>
+ <p class="success">
+   <?php
+     if(isset($_GET["register"])) {
+       if($_GET["register"] == "success") {
+         echo 'User created!';
        }
      }
    ?>

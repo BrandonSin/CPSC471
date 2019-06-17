@@ -3,10 +3,6 @@
   session_start($options = ["userId", "userType"]);
   include_once "./includes/dbh.inc.php";
 
-  if($_SESSION["userId"] == "store_manager") {
-    header("Location: ./storemanage.php");
-  }
-
   //If userId is empty in the session, redirect back to login
   if(!isset($_SESSION["userId"])) {
     header("Location: ./login.php");
@@ -64,7 +60,24 @@
     font face = "verdana";
     font size = 50px;
   }
+  .active {
+  background-color: #226b00;;
+}
+/*Logout Button */
+li2 {
+  float: right;
+}
 
+li2 a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+li2 a:hover:not(.active) {
+  background-color: #226b00;
+}
 
 
 </style>
@@ -75,15 +88,13 @@
 <body>
 <h1 id="borderImage"><font face = "verdana">CC's Grocery Online Store</h1>
 <ul>
-  <li><a href="index.html">Home</a></li>
+  <li><a class="active" href="index.php">Home</a></li>
   <li><a href="Discount">Discount</a></li>
-  <li><a href="Produce">Produce</a></li>
-  <li><a href="Dairy">Dairy</a></li>
-  <li><a href="MnS">Meat & Seafood</a></li>
-  <li><a href="Snacks">Snacks</a></li>
-  <li><a href="shoppingCart.html">Shopping Cart</a></li>
-  <li><a href="shoppingList.html">Shopping List</a></li>
-  <li><a href ="login.html">Login</a></li>
+  <li><a href="produce.php">Catalog</a></li>
+  <li><a href="shoppingCart.php">Shopping Cart</a></li>
+  <li><a href="shoppingList.php">Shopping List</a></li>
+   <li2><a href="logout.php">Logout</a></li2>
+
 </ul>
 
 <!-- Slide Show ------------------------------------------------------------------------------->

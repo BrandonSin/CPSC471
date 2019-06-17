@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2019 at 09:36 PM
+-- Generation Time: Jun 17, 2019 at 03:28 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 -- Table structure for table `coupon`
 --
 
-DROP TABLE IF EXISTS `coupon`;
 CREATE TABLE `coupon` (
   `coupon_code` varchar(20) NOT NULL,
   `is_used` tinyint(1) NOT NULL,
@@ -40,7 +39,9 @@ CREATE TABLE `coupon` (
 --
 
 INSERT INTO `coupon` (`coupon_code`, `is_used`, `percent_off`) VALUES
-('15off', 0, 15);
+('15off', 0, 15),
+('20off', 1, 20),
+('specialsale', 0, 25);
 
 -- --------------------------------------------------------
 
@@ -48,7 +49,6 @@ INSERT INTO `coupon` (`coupon_code`, `is_used`, `percent_off`) VALUES
 -- Table structure for table `delivery_company`
 --
 
-DROP TABLE IF EXISTS `delivery_company`;
 CREATE TABLE `delivery_company` (
   `company_id` varchar(20) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -70,7 +70,6 @@ INSERT INTO `delivery_company` (`company_id`, `name`, `delivery_fee`) VALUES
 -- Table structure for table `grocery_store`
 --
 
-DROP TABLE IF EXISTS `grocery_store`;
 CREATE TABLE `grocery_store` (
   `store_id` varchar(20) NOT NULL,
   `name` varchar(60) NOT NULL,
@@ -92,7 +91,6 @@ INSERT INTO `grocery_store` (`store_id`, `name`, `email`) VALUES
 -- Table structure for table `is_added_to`
 --
 
-DROP TABLE IF EXISTS `is_added_to`;
 CREATE TABLE `is_added_to` (
   `list_name` varchar(20) NOT NULL,
   `user_id` varchar(20) NOT NULL,
@@ -116,7 +114,6 @@ INSERT INTO `is_added_to` (`list_name`, `user_id`, `item_id`, `quantity_of_item`
 -- Table structure for table `is_applied_to`
 --
 
-DROP TABLE IF EXISTS `is_applied_to`;
 CREATE TABLE `is_applied_to` (
   `cart_id` varchar(20) NOT NULL,
   `user_id` varchar(20) NOT NULL,
@@ -129,7 +126,6 @@ CREATE TABLE `is_applied_to` (
 -- Table structure for table `is_put_in`
 --
 
-DROP TABLE IF EXISTS `is_put_in`;
 CREATE TABLE `is_put_in` (
   `item_id` varchar(20) NOT NULL,
   `user_id` varchar(20) NOT NULL,
@@ -142,8 +138,21 @@ CREATE TABLE `is_put_in` (
 --
 
 INSERT INTO `is_put_in` (`item_id`, `user_id`, `cart_id`, `quantity_of_item`) VALUES
+('cg-brown-eggs', 'shopper1', '19277561', 4),
+('cg-brown-eggs', 'shopper1', '27528549', 2),
+('cg-brown-eggs', 'shopper1', '44648310', 1),
+('cg-curry-powder', 'shopper1', '44648310', 1),
+('cg-wg-bread', 'shopper1', '27528549', 1),
+('cg-white-eggs', 'shopper1', '27528549', 1),
 ('mm-ground-beef', 'shopper1', '27528549', 1),
-('mm-tenderloin-steak', 'shopper1', '18352934', 1);
+('mm-tenderloin-steak', 'shopper1', '18352934', 1),
+('mm-tenderloin-steak', 'shopper1', '27528549', 1),
+('pp-broccoli', 'shopper1', '27528549', 1),
+('pp-carrots', 'shopper1', '27528549', 1),
+('pp-red-beets', 'shopper1', '', 1),
+('pp-red-beets', 'shopper1', '44648310', 1),
+('pp-yellow-onion', 'shopper1', '', 1),
+('pp-yellow-onion', 'shopper1', '27528549', 2);
 
 -- --------------------------------------------------------
 
@@ -151,7 +160,6 @@ INSERT INTO `is_put_in` (`item_id`, `user_id`, `cart_id`, `quantity_of_item`) VA
 -- Table structure for table `item`
 --
 
-DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `item_id` varchar(20) NOT NULL,
   `name` varchar(60) NOT NULL,
@@ -214,7 +222,6 @@ INSERT INTO `item` (`item_id`, `name`, `description`, `stock`, `price`, `is_on_s
 -- Table structure for table `order_receipt`
 --
 
-DROP TABLE IF EXISTS `order_receipt`;
 CREATE TABLE `order_receipt` (
   `order_number` varchar(20) NOT NULL,
   `number_of_items` int(11) NOT NULL,
@@ -229,6 +236,7 @@ CREATE TABLE `order_receipt` (
 --
 
 INSERT INTO `order_receipt` (`order_number`, `number_of_items`, `order_total`, `user_id`, `date_of_order`, `cart_id`) VALUES
+('76156316', 3, '6.06', 'shopper1', '0000-00-00', '44648310'),
 ('92340503', 1, '29.16', 'shopper1', '2019-06-08', '18352934');
 
 -- --------------------------------------------------------
@@ -237,7 +245,6 @@ INSERT INTO `order_receipt` (`order_number`, `number_of_items`, `order_total`, `
 -- Table structure for table `shopper`
 --
 
-DROP TABLE IF EXISTS `shopper`;
 CREATE TABLE `shopper` (
   `user_id` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -255,10 +262,10 @@ INSERT INTO `shopper` (`user_id`) VALUES
 -- Table structure for table `shopping_cart`
 --
 
-DROP TABLE IF EXISTS `shopping_cart`;
 CREATE TABLE `shopping_cart` (
   `cart_id` varchar(20) NOT NULL,
   `total_price` decimal(10,2) DEFAULT NULL,
+  `discounted_price` decimal(10,2) DEFAULT NULL,
   `user_id` varchar(20) NOT NULL,
   `company_id` varchar(20) DEFAULT NULL,
   `active` tinyint(1) NOT NULL
@@ -268,9 +275,10 @@ CREATE TABLE `shopping_cart` (
 -- Dumping data for table `shopping_cart`
 --
 
-INSERT INTO `shopping_cart` (`cart_id`, `total_price`, `user_id`, `company_id`, `active`) VALUES
-('18352934', '29.16', 'shopper1', 'quik-parcel', 0),
-('27528549', '20.49', 'shopper1', 'quik-parcel', 1);
+INSERT INTO `shopping_cart` (`cart_id`, `total_price`, `discounted_price`, `user_id`, `company_id`, `active`) VALUES
+('18352934', '29.16', NULL, 'shopper1', 'quik-parcel', 0),
+('19277561', '12.76', NULL, 'shopper1', 'quik-parcel', 1),
+('44648310', '6.06', NULL, 'shopper1', 'quik-parcel', 0);
 
 -- --------------------------------------------------------
 
@@ -278,7 +286,6 @@ INSERT INTO `shopping_cart` (`cart_id`, `total_price`, `user_id`, `company_id`, 
 -- Table structure for table `shopping_list`
 --
 
-DROP TABLE IF EXISTS `shopping_list`;
 CREATE TABLE `shopping_list` (
   `name` varchar(20) NOT NULL,
   `total_price` decimal(10,2) DEFAULT NULL,
@@ -299,7 +306,6 @@ INSERT INTO `shopping_list` (`name`, `total_price`, `user_id`) VALUES
 -- Table structure for table `store_manager`
 --
 
-DROP TABLE IF EXISTS `store_manager`;
 CREATE TABLE `store_manager` (
   `user_id` varchar(20) NOT NULL,
   `store_id` varchar(20) NOT NULL
@@ -320,7 +326,6 @@ INSERT INTO `store_manager` (`user_id`, `store_id`) VALUES
 -- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` varchar(20) NOT NULL,
   `fname` varchar(15) DEFAULT NULL,
@@ -381,17 +386,13 @@ ALTER TABLE `is_added_to`
 -- Indexes for table `is_applied_to`
 --
 ALTER TABLE `is_applied_to`
-  ADD PRIMARY KEY (`cart_id`,`user_id`,`coupon_code`),
-  ADD KEY `coupon_code` (`coupon_code`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`cart_id`,`user_id`,`coupon_code`);
 
 --
 -- Indexes for table `is_put_in`
 --
 ALTER TABLE `is_put_in`
-  ADD PRIMARY KEY (`item_id`,`user_id`,`cart_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `cart_id` (`cart_id`);
+  ADD PRIMARY KEY (`item_id`,`user_id`,`cart_id`);
 
 --
 -- Indexes for table `item`
@@ -405,10 +406,7 @@ ALTER TABLE `item`
 -- Indexes for table `order_receipt`
 --
 ALTER TABLE `order_receipt`
-  ADD PRIMARY KEY (`order_number`),
-  ADD UNIQUE KEY `order_number` (`order_number`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `cart_id` (`cart_id`);
+  ADD PRIMARY KEY (`order_number`);
 
 --
 -- Indexes for table `shopper`

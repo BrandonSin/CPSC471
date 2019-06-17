@@ -33,7 +33,7 @@
 <body>
  <div class="bg"></div>
  <div class="login-box-wrapper">
-   <h1>Garland's Groceries</h1>
+   <h1>GrocerEasy</h1>
  <div class="login-box">
   <h2>Login</h2>
   <form action="includes/login.inc.php" method="post">

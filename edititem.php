@@ -181,7 +181,7 @@
 </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">CC's Grocery Online Store</h1>
+<h1 id="borderImage"><font face = "verdana">GrocerEasy</h1>
 
  <br><br>
  <div class="container store-manage-container">

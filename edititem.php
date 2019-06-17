@@ -122,6 +122,10 @@
     transform: translateY(6px);
   }
 
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
   /*================================================================================================*/
   /* THIS CODE IS USED FROM https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
     /* The Modal (background) */
@@ -210,9 +214,10 @@
         echo(
           "<div class=\"col-4 item-img\">".
               "<img class=\"mb-2\" src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"200px\" width=\"200px\"/>".
-              "<form action=\"\" method=\"post\">".
+              "<form action=\"includes/edititem.inc.php\" method=\"post\">".
                 "<div class=\"d-flex flex-column mb-2\">".
                   "<h6>Name</h6>".
+                  "<input class=\"d-none\" tpye=\"text\" name=\"item-id\" value=\"$itemId\">".
                   "<input class=\"name-input\" type=\"text\" name=\"edit-name\" value=\"$itemName\">".
                 "</div>".
                 "<div class=\"d-flex flex-column mb-2\">".
@@ -230,17 +235,17 @@
                 "<div class=\"d-flex flex-column mb-2\">".
                   "<h6>Percent Off</h6>".
                   "<div class=\"row ml-0 mb-2 mr-1\">".
-                    "<input class=\"number-input mr-3\" type=\"number\" name=\"edit-percent-off\" max=\"100\" min=\"1\" value=\"".
+                    "<input class=\"number-input mr-3".($itemOnsale == 1 ? "" : " disabled")."\" type=\"number\" name=\"edit-percent-off\" max=\"100\" id=\"percentOff\" min=\"0\" value=\"".
                     (isset($itemPercentOff) ? $itemPercentOff : "").
                     "\">".
                     "On Sale".
-                    "<input class=\"ml-1 check-box\" type=\"checkbox\" name=\"edit-on-sale\" value=\"\"".
+                    "<input class=\"ml-1 check-box\" type=\"checkbox\" name=\"edit-on-sale\" id=\"checkBox\" onclick=\"toggleOnsale()\"".
                     ($itemOnsale == 1 ? "checked" : "").
                     ">".
                   "</div>".
                 "</div>".
                 "<div class=\"row ml-0 mt-1 mb-5\">".
-                  "<input class=\"new-item-btn\" type=\"submit\" name=\"login-submit\" value=\"Save\">".
+                  "<input class=\"new-item-btn\" type=\"submit\" name=\"save-submit\">".
                   "<button type=\"button\" class=\"new-item-btn ml-2\" onclick=\"cancelEdit()\">Cancel</button>".
                 "</div>".
               "</form>".
@@ -251,6 +256,19 @@
    </div>
   </div>
   <script>
+    checkBox = document.getElementById("checkBox");
+
+    function toggleOnsale(){
+      if(checkBox.checked) {
+        document.getElementById("percentOff").className = "number-input mr-3";
+        document.getElementById("percentOff").value = 0;
+      }
+      else {
+        document.getElementById("percentOff").value = null;
+        document.getElementById("percentOff").className = "number-input mr-3 disabled";
+      }
+    }
+
     function cancelEdit(){
       window.location.href="storemanage.php";
     }

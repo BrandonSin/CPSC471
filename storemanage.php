@@ -88,6 +88,42 @@
     background-color: #eb413d;
   }
 
+  .delete-btn{
+    border: none;
+    background: #e60000;
+    outline: none !important;
+    box-shadow: none;
+    border-radius: 15px;
+    color: white;
+    transition: background-color ease-in-out 0.1s;
+    height: 35px;
+  }
+  .delete-btn:hover{
+    background-color: #ff1a1a;
+  }
+
+  .delete-btn:active{
+    background-color: #990000;
+  }
+
+  .cancel-btn{
+    border: none;
+    background: #b3b3b3;
+    outline: none !important;
+    box-shadow: none;
+    border-radius: 15px;
+    color: white;
+    transition: background-color ease-in-out 0.1s;
+    height: 35px;
+  }
+  .cancel-btn:hover{
+    background-color: #cccccc;
+  }
+
+  .cancel-btn:active{
+    background-color: #737373;
+  }
+
   .store-manage-container{
     margin-left: 3% !important;
   }
@@ -196,7 +232,7 @@
    </h2>
    <div class="row">
      <h3 class="col-2">Items</h3>
-     <button class="col-2 new-item-btn" onclick="showNewItemModal()" id="modalBtn">New item</button>
+     <button class="ml-2 col-4 new-item-btn" onclick="showNewItemModal()" id="modalBtn">New item</button>
    </div>
    <div class="mt-4 row item-list-wrapper">
      <?php
@@ -213,7 +249,7 @@
                 "<img src=\"data:image/jpeg;base64,".base64_encode($itemImg)."\" height=\"100px\" width=\"100px\"/>".
                 "$itemName".
                 "<div class=\"row\">".
-                  "<button class=\"new-item-btn mt-2 mr-1\" onclick=\"showDeleteModal()\" value=\"".$itemId."\">Delete</button>".
+                  "<button class=\"new-item-btn mt-2 mr-1\" onclick=\"showDeleteModal(this)\" value=\"".$itemId."\">Delete</button>".
                   "<button class=\"new-item-btn mt-2 ml-1\" onclick=\"editItem(this)\" value=\"".$itemId."\">Edit</button>".
                 "</div>".
               "</div>".
@@ -240,7 +276,14 @@
     <!-- Modal content -->
     <div class="modal-content">
       <span class="close delete-close" onclick="hideDeleteModal()">&times;</span>
-      <p>Some text in the Modal..</p>
+      <h3 class="text-center">Are you sure you want to delete this item?</h3>
+      <div class="row justify-content-center">
+        <button class="cancel-btn mt-2 mr-1" onclick="hideDeleteModal()">Cancel</button>
+        <form action="includes/deleteitemfromshop.inc.php" method="post">
+          <input type="submit" class="delete-btn mt-2 ml-1" name="delete-btn" value="Delete">
+          <input type="text" class="d-none" name-"delete-item-id" id="deleteItemId">
+        </form>
+      </div>
     </div>
 
   </div>
@@ -261,20 +304,22 @@
     }
 
     // When the user clicks the button, open the modal
-    function showDeleteModal() {
+    function showDeleteModal(elem) {
+      document.getElementById("deleteItemId").value = elem.value;
       deleteModal.style.display = "block";
     }
 
     // When the user clicks on <span> (x), close the modal
     function hideDeleteModal() {
+      document.getElementById("deleteItemId").value = null;
       deleteModal.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
       if ((event.target == newItemModal) || (event.target == deleteModal)) {
-        deleteModal.style.display = "none";
-        newItemModal.style.display = "none";
+        hideNewItemModal();
+        hideDeleteModal();
       }
     }
 

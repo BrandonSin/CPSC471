@@ -38,6 +38,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
     </script>
 <style>
+<link rel="stylesheet" href="style.css">
 
 #borderImage {
 
@@ -78,11 +79,11 @@
   }
 
  li a:hover:not(.active) {
- background-color: #226b00;
+ background-color: #209f80;
  }
 
  .active {
-  background-color: #226b00;;
+  background-color: #209f80;;
 }
 
 /*Logout Button */
@@ -99,7 +100,7 @@ li2 a {
   text-decoration: none;
 }
 li2 a:hover:not(.active) {
-  background-color: #226b00;
+  background-color: #209f80;
 }
 
   .remove-item{
@@ -137,12 +138,10 @@ li2 a:hover:not(.active) {
  </style>
  </head>
 
-
-
-
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
-<ul>
+  <div style="background-color: #25cd8a; height: 100px; text-align: center; text-shadow: 3px 3px #209f80; pointer-events: none; user-select: none;-moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; border-radius: 25px 25px 0 0;">
+    <h1 style="transform: translateY(25px); color: white;">GrocerEase</h1>
+  </div><ul>
   <li><a href="index.php">Home</a></li>
 
   <li><a class="active" href="produce.php">Catalog</a></li>
@@ -174,6 +173,7 @@ $result = $conn->query($sql);
 if(mysqli_num_rows($result)>0)
 {
   while($row = mysqli_fetch_array($result)) {
+    //Generate items
     $itemImg = $row["image"];
     $itemId = $row["item_id"];
     ?>
@@ -208,10 +208,11 @@ if(mysqli_num_rows($result)>0)
   	  </form>
 
   	  <?php
-
+        //Logic to handle adding an item to user's cart
   	  	if(isset($_POST["add_to_cart"])){
           $itemId = $_POST["item-id"];
           $quantity = $_POST["quantity"];
+          //put in cart
           $sql = "SELECT * FROM is_put_in WHERE user_id=$userId AND cart_id=$cartId AND item_id=$itemId";
           $result = mysqli_query($conn, $sql);
           if(mysqli_num_rows($result) > 0) {
@@ -253,8 +254,6 @@ if(mysqli_num_rows($result)>0)
           <tr>
             <th width="40%">Item Name</th>
             <th width="10%">Quantity</th>
-
-
             <th width="20%">Price</th>
             <th width="15%">Total</th>
             <th width="5%">Action</th>
@@ -265,6 +264,7 @@ if(mysqli_num_rows($result)>0)
             $sql = "SELECT S.item_id, S.name, S.price, S.is_on_sale, S.sale_price, I.quantity_of_item FROM item S INNER JOIN is_put_in I ON I.item_id=S.item_id AND I.user_id=\"$userId\" AND I.cart_id=$cartId";
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) > 0) {
+              //Generate rows of all your items in your cart
               while($row = mysqli_fetch_array($result)){
           ?>
               <tr>
@@ -301,6 +301,7 @@ if(mysqli_num_rows($result)>0)
               }
             }
 
+            //Get the total price
             $sql="SELECT * FROM shopping_cart WHERE user_id=\"$userId\" AND cart_id=$cartId";
             $result = mysqli_query($conn, $sql);
             if(mysqli_num_rows($result) > 0) {

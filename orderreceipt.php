@@ -29,6 +29,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
     </script>
 <style>
+<link rel="stylesheet" href="style.css">
 
 #borderImage {
 
@@ -69,11 +70,11 @@
   }
 
  li a:hover:not(.active) {
- background-color: #226b00;
+ background-color: #209f80;
  }
 
  .active {
-  background-color: #226b00;;
+  background-color: #209f80;;
 }
 
 /*Logout Button */
@@ -90,7 +91,7 @@ li2 a {
   text-decoration: none;
 }
 li2 a:hover:not(.active) {
-  background-color: #226b00;
+  background-color: #209f80;
 }
 
   .remove-item{
@@ -129,8 +130,9 @@ li2 a:hover:not(.active) {
  </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
-<ul>
+  <div style="background-color: #25cd8a; height: 100px; text-align: center; text-shadow: 3px 3px #209f80; pointer-events: none; user-select: none;-moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; border-radius: 25px 25px 0 0;">
+    <h1 style="transform: translateY(25px); color: white;">GrocerEase</h1>
+  </div><ul>
   <li><a href="index.php">Home</a></li>
 
   <li><a class="active" href="produce.php">Catalog</a></li>

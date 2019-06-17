@@ -25,6 +25,7 @@
 <head>
   <link rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 <style>
 
   .slideShows {display: none;}
@@ -58,7 +59,7 @@
   }
 
  li a:hover:not(.active) {
- background-color: #226b00;
+ background-color: #209f80;
  }
 
   <!-- banner font----------------------->
@@ -188,8 +189,13 @@
 </head>
 
 <body>
-<h1 id="borderImage"><font face = "verdana">GrocerEase</h1>
-
+  <div style="background-color: #25cd8a; height: 100px; text-align: center; text-shadow: 3px 3px #209f80; pointer-events: none; user-select: none;-moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; border-radius: 25px 25px 0 0;">
+    <h1 style="transform: translateY(25px); color: white;">GrocerEase</h1>
+  </div>
+  <ul>
+    <li><a class="active" href="storemanage.php">Home</a></li>
+    <li><a class="active" href="includes/logout.inc.php">Logout</a></li>
+  </ul>
  <br><br>
  <div class="container store-manage-container">
    <h2 class="mb-4 store-name">

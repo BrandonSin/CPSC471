@@ -19,6 +19,7 @@
     if(!empty($_POST["edit-percent-off"])) {
       $editedPercOff = $_POST["edit-percent-off"];
     }
+    $salePrice = $editedPrice * ((100-$editedPercOff) * 0.01);
     $null = NULL;
     $itemImg = NULL;
     if($_FILES['edit-img']['tmp_name']) {
@@ -46,11 +47,11 @@
       else {
         //bind the variable (?) in the query with $userId and execute query
         if($itemImg != NULL) {
-          mysqli_stmt_bind_param($stmt, "ssidiibs", $editedItemName, $editedDescription, $editedStock, $editedPrice, $editedOnSale, $editedPercOff, $null, $itemId);
+          mysqli_stmt_bind_param($stmt, "ssidiibsd", $editedItemName, $editedDescription, $editedStock, $editedPrice, $editedOnSale, $editedPercOff, $null, $itemId, $salePrice);
           $stmt->send_long_data(6, $itemImg);
         }
         else {
-          mysqli_stmt_bind_param($stmt, "ssidiis", $editedItemName, $editedDescription, $editedStock, $editedPrice, $editedOnSale, $editedPercOff, $itemId);
+          mysqli_stmt_bind_param($stmt, "ssidiisd", $editedItemName, $editedDescription, $editedStock, $editedPrice, $editedOnSale, $editedPercOff, $itemId, $salePrice);
         }
         mysqli_stmt_execute($stmt);
 

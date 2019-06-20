@@ -24,7 +24,7 @@
     $salePrice = NULL;
     if(!empty($_POST["percent-off"])) {
       $percOff = $_POST["percent-off"];
-      $salePrice = $itemPrice * ((100-$percOff) / 0.01);
+      $salePrice = $itemPrice * ((100-$percOff) * 0.01);
     }
 
     $null = NULL;
@@ -47,7 +47,7 @@
       }
       else {
         //bind the variable (?) in the query with $userId and execute query
-        mysqli_stmt_bind_param($stmt, "sssidisiib", $itemId, $itemName, $itemDesc, $itemStock, $itemPrice, $onSale, $userId, $percOff, $salePrice, $null);
+        mysqli_stmt_bind_param($stmt, "sssidisidb", $itemId, $itemName, $itemDesc, $itemStock, $itemPrice, $onSale, $userId, $percOff, $salePrice, $null);
         $stmt->send_long_data(9, $itemImg);
         mysqli_stmt_execute($stmt);
 

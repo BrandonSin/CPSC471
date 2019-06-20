@@ -35,7 +35,7 @@
  <div class="register-box-wrapper">
    <h2>Register</h2>
  <div class="register-box">
-   <form action="includes/register.inc.php" method="post">
+   <form class="register-form" action="includes/register.inc.php" method="post">
      <div class="textbox">
        <i class="fas fa-child"></i>
        <input type="text" placeholder="Username" onfocus="this.placeholder = ''" onBlur="this.placeholder = 'Username'" name="input-username" value="">
@@ -50,10 +50,21 @@
      </div>
       <input class="btn" type="submit" name="register-submit" value="Register">
    </form>
- <p class="error">
-
- </p>
 </div>
+<div class="error text-center">
+  <?php
+     if(isset($_GET["error"])) {
+       if($_GET["error"] == "emptyfields") {
+         echo "Error. Please fill in all fields.";
+       }
+       if($_GET["error"] == "existinguser") {
+         echo "Error. That user already exists. Please enter another username.";
+       }
+       if($_GET["error"] == "pwmismatch") {
+         echo "Error. The password did not match.";
+       }
+     }
+  ?>
 </div>
 </div>
 

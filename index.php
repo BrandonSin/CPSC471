@@ -21,6 +21,11 @@
 
 <html>
 <head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js">
+  </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js">
+  </script>
   <link rel="stylesheet" href="style.css">
 <style>
 
@@ -87,6 +92,24 @@ li2 a:hover:not(.active) {
   background-color: #209f80;
 }
 
+.intro-card{
+  position: absolute;
+  top: 37%;
+  left: 25%;
+  font-size: 32px;
+  color: white;
+  width: 800px;
+  text-align: center;
+  background: rgba(0,0,0, 0.65);
+  border-radius: 25px;
+  padding: 30px;
+}
+
+.footer {
+  background: #333;
+  height: 150px;
+  border-radius: 0 0 25px 25px;
+}
 
 </style>
 
@@ -100,21 +123,26 @@ li2 a:hover:not(.active) {
 
 <ul>
   <li><a class="active" href="index.php">Home</a></li>
-
   <li><a href="produce.php">Catalog</a></li>
+  <li><a href="shoppinglist.php">Shopping List</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
-
-   <li2><a href="includes/logout.inc.php">Logout</a></li2>
-
+  <li2><a href="includes/logout.inc.php">Logout</a></li2>
 </ul>
 
 <!-- Slide Show ------------------------------------------------------------------------------->
-<div class = "pictureShow">
-  <img class="slideShows" img src= "images/fresh-vegetables.jpg" style="width:100%">
-  <img class="slideShows" img src= "images/fresh.jpg" style="width:100%">
-  <img class="slideShows" img src= "images/veggies.jpg" style="width:100%">
+<div>
+  <div class="intro-card">
+    GrocerEase is a certified Online Grocery Shopping service that provides fresh food and fast shipping for various groceries in Canada.
   </div>
+  <div class = "pictureShow" style="height: 50%; overflow: hidden;">
+    <img class="slideShows" img src= "images/fresh-vegetables.jpg" style="width:100%">
+    <img class="slideShows" img src= "images/fresh.jpg" style="width:100%">
+    <img class="slideShows" img src= "images/veggies.jpg" style="width:100%">
+  </div>
+</div>
 
+  <div class="footer">
+  </div>
 <!-- Script for SlideShow ------------------------------------------------------------------------------>
   <script>
 var slideIndex = 0;
@@ -132,8 +160,5 @@ function slideShow() {
   setTimeout(slideShow, 2000);
 }
 </script>
- <br><br><br>
-<p>GrocerEase is a certified Online Grocery Shopping service that provides fresh food and fast shipping for various groceries in Canada.</p>
-
 </body>
 </html>

@@ -134,10 +134,9 @@ li2 a:hover:not(.active) {
     <h1 style="transform: translateY(25px); color: white;">GrocerEase</h1>
   </div><ul>
   <li><a href="index.php">Home</a></li>
-
   <li><a class="active" href="produce.php">Catalog</a></li>
+  <li><a href="shoppinglist.php">Shopping Listss</a></li>
   <li><a href="shoppingCart.php">Shopping Cart</a></li>
-
   <li2><a href="logout.php">Logout</a></li2>
  </ul>
  <br />

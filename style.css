@@ -31,7 +31,7 @@
  .login-box-wrapper h1{
    color: #25cd8a;
  }
- 
+
  .login-box h2{
   float: left;
   font-size: 30px;
@@ -59,6 +59,11 @@
   width: 300px;
   display: inline;
  }
+
+ .register-form {
+   max-width: fit-content;
+ }
+
  .register-box h2{
   float: left;
   font-size: 30px;
@@ -115,4 +120,13 @@
 
 .error {
   color: red;
+}
+
+.success {
+  color: #08d208;
+}
+
+a:focus, a:hover {
+    color: inherit !important;
+    text-decoration: none !important;
 }

@@ -8,6 +8,8 @@
     header("Location: ./login.php");
     exit();
   }
+
+  //get cart id of user's current cart
   $userId = $_SESSION["userId"];
   $cartId = "";
   $cartQuery = "SELECT cart_id FROM shopping_cart WHERE active=1 AND user_id=\"$userId\"";
@@ -18,11 +20,22 @@
   }
 
 	if(isset($_POST["add_to_cart"])){
+    //If already in cart, add to quantity
     $itemId = $_POST["item-id"];
     $quantity = $_POST["quantity"];
     $sql = "SELECT * FROM is_put_in WHERE user_id=\"$userId\" AND cart_id=$cartId AND item_id=\"$itemId\"";
     $result = mysqli_query($conn, $sql);
     if(mysqli_num_rows($result) > 0) {
+      //Error if user tries to put more than the available stock into shopping cart
+      $quantityAlreadyInCart = mysqli_fetch_assoc($result)["quantity_of_item"];
+      $sql = "SELECT name, stock FROM item WHERE item_id = '$itemId'";
+      $itemResult = mysqli_query($conn, $sql);
+      $row = mysqli_fetch_assoc($itemResult);
+      if(($quantity + $quantityAlreadyInCart) > $row["stock"]) {
+        header("Location: ../produce.php?error=exceedstock");
+        exit();
+      }
+
       $sql = "UPDATE is_put_in SET quantity_of_item=quantity_of_item+$quantity WHERE cart_id=$cartId AND user_id=\"$userId\" AND item_id=\"$itemId\"";
       if (!mysqli_query($conn, $sql)) {
         header("Location: ../produce.php?addtocart=error");
@@ -30,6 +43,16 @@
       }
     }
     else {
+      //Error if user tries to put more than the available stock into shopping cart
+      $sql = "SELECT name, stock FROM item WHERE item_id = '$itemId'";
+      $itemResult = mysqli_query($conn, $sql);
+      $row = mysqli_fetch_assoc($itemResult);
+      if($quantity > $row["stock"]) {
+        header("Location: ../produce.php?error=exceedstock");
+        exit();
+      }
+
+      //If not in cart create new entry
       $sql = "INSERT INTO is_put_in (item_id, user_id, cart_id, quantity_of_item) VALUES ('$itemId','$userId','$cartId','$quantity')";
       if (!mysqli_query($conn, $sql)) {
         header("Location: ../produce.php?addtocart=error");

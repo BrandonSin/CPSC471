@@ -184,9 +184,6 @@
     transform: translateY(6px);
   }
 
-  .success {
-    color: #08d208;
-  }
   /*================================================================================================*/
   /* THIS CODE IS USED FROM https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
     /* The Modal (background) */
@@ -228,16 +225,21 @@
     cursor: pointer;
   }
   /*================================================================================================*/
+
+  li a:hover, li a:active, .active{
+  background-color: #209f80;
+  }
 </style>
 
 
 </head>
 
 <body>
-  <div style="background-color: #25cd8a; height: 100px; text-align: center; text-shadow: 3px 3px #209f80; pointer-events: none; user-select: none;-moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; border-radius: 25px 25px 0 0;">
-  <ul>
+  <div class="mt-4" style="background-color: #25cd8a; height: 100px; text-align: center; text-shadow: 3px 3px #209f80; pointer-events: none; user-select: none;-moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; border-radius: 25px 25px 0 0;">
+    <h1 style="transform: translateY(25px); color: white;">GrocerEase</h1>
+  </div>  <ul>
     <li><a class="active" href="storemanage.php">Home</a></li>
-    <li><a class="active" href="includes/logout.inc.php">Logout</a></li>
+    <li><a href="includes/logout.inc.php">Logout</a></li>
   </ul>
  <br><br>
  <div class="container store-manage-container mb-4">

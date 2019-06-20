@@ -174,6 +174,15 @@ background-color: #209f80;
 
 <div class="container wrapper">
 <h3>Shopping Cart</h3>
+<div class="success">
+  <?php
+    if(isset($_GET["transfertocart"])) {
+      if($_GET["transfertocart"] == "success") {
+        echo "All items in shopping list transferred to cart!";
+      }
+    }
+  ?>
+</div>
 <div class="table-responsive" style="width: 650px;">
   <table class="table table-bordered">
     <tr>

@@ -19,11 +19,12 @@
   $userId = $_SESSION["userId"];
 
   if(isset($_POST["create-list"])) {
-    $listName = $_POST["list-name"];
-    if(empty($listName)) {
+    if($_POST["list-name"] == "") {
       header("Location: ../createlist.php?error=emptyfield");
       exit();
     }
+
+    $listName = $_POST["list-name"];
 
     $sql = "SELECT * FROM shopping_list WHERE user_id = '$userId' AND name = '$listName'";
     $result = mysqli_query($conn, $sql);

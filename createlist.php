@@ -170,20 +170,20 @@ background-color: #209f80;
   <div class="error">
   </div>
   <form action="includes/createlist.inc.php" method="post">
-    List name: <input type="text" name="list-name">
+    List name: <input type="text" name="list-name" value="">
     <input class="new-item-btn" type="submit" name="create-list" value="Create">
   </form>
 </div>
 <?php
   if(isset($_GET["error"])) {
     if($_GET["error"] == "listexists") {
-      echo "<div style='color: red'>Error: Please enter a name for your list.</div>";
+      echo "<div style='color: red; text-align: center;'>Error: This list already exists. Please use another name.</div>";
     }
     if($_GET["error"] == "emptyfield") {
-      echo "<div style='color: red'>Error: This list already exists. Please use another name.</div>";
+      echo "<div style='color: red; text-align: center;'>Error: Please enter a name for your list.</div>";
     }
     if($_GET["error"] == "creationerror") {
-      echo "<div style='color: red'>Error: Database error.</div>";
+      echo "<div style='color: red; text-align: center;'>Error: Database error.</div>";
     }
   }
 ?>
